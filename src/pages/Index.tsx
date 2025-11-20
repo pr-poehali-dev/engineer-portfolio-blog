@@ -59,16 +59,10 @@ function Index() {
     }
   ];
 
-  const decorativeShapes = [
-    { size: 100, left: '10%', top: '20%', delay: '0s' },
-    { size: 60, left: '85%', top: '15%', delay: '1s' },
-    { size: 80, left: '15%', top: '60%', delay: '2s' },
-    { size: 70, left: '80%', top: '70%', delay: '1.5s' },
-    { size: 90, left: '50%', top: '85%', delay: '0.5s' },
-  ];
+
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground">
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="text-2xl font-heading font-bold text-primary">
@@ -82,23 +76,6 @@ function Index() {
           </div>
         </div>
       </nav>
-
-      {decorativeShapes.map((shape, idx) => (
-        <div
-          key={idx}
-          className="fixed opacity-5 pointer-events-none float-animation"
-          style={{
-            width: shape.size,
-            height: shape.size,
-            left: shape.left,
-            top: shape.top,
-            animationDelay: shape.delay,
-            background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%)',
-            borderRadius: idx % 2 === 0 ? '50%' : '20%',
-            zIndex: 0,
-          }}
-        />
-      ))}
 
       <section className="min-h-screen flex items-center justify-center relative pt-20">
         <div 
@@ -128,12 +105,8 @@ function Index() {
         </div>
       </section>
 
-      <section id="about" className="py-24 bg-card/50 relative">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-20 w-40 h-40 bg-primary rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-20 w-60 h-60 bg-secondary rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-        <div className="container mx-auto px-6 relative z-10">
+      <section id="about" className="py-24 bg-card/50">
+        <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-heading font-bold mb-8 animate-slide-up">
               Обо мне
@@ -156,81 +129,56 @@ function Index() {
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-center mb-16 animate-fade-in">
             Опыт работы
           </h2>
-          <div className="max-w-5xl mx-auto space-y-8">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {experiences.map((exp, idx) => (
               <Card 
                 key={idx} 
-                className={`p-8 hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20 border-border bg-card ${
-                  idx % 2 === 0 ? 'animate-slide-in-left' : 'animate-slide-in-right'
-                }`}
-                style={{ 
-                  animationDelay: `${idx * 0.2}s`,
-                }}
+                className="group relative h-64 overflow-hidden border-border bg-card hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 cursor-pointer"
               >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-                  <div>
-                    <h3 className="text-2xl font-heading font-bold text-primary mb-2">
-                      {exp.position}
-                    </h3>
-                    <p className="text-xl text-foreground">{exp.company}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-muted-foreground">{exp.period}</p>
-                    <Badge variant="outline" className="mt-2 animate-bounce-in" style={{ animationDelay: `${idx * 0.2 + 0.3}s` }}>{exp.duration}</Badge>
-                  </div>
+                <div className="absolute inset-0 p-6 flex flex-col justify-center items-center text-center transition-all duration-500 group-hover:translate-y-[-100%]">
+                  <h3 className="text-2xl font-heading font-bold text-primary mb-3">
+                    {exp.company}
+                  </h3>
+                  <Badge variant="outline">{exp.duration}</Badge>
                 </div>
-                <p className="text-muted-foreground leading-relaxed blur-text">
-                  {exp.description}
-                </p>
+                <div className="absolute inset-0 p-6 translate-y-[100%] group-hover:translate-y-0 transition-all duration-500 flex flex-col justify-center bg-card/95">
+                  <h4 className="text-lg font-heading font-bold text-primary mb-2">
+                    {exp.position}
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3">{exp.period}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {exp.description}
+                  </p>
+                </div>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="services" className="py-24 bg-card/50 relative">
-        <div className="absolute inset-0 opacity-5">
-          {[...Array(6)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute bg-primary animate-pulse"
-              style={{
-                width: Math.random() * 100 + 50,
-                height: Math.random() * 100 + 50,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                borderRadius: Math.random() > 0.5 ? '50%' : '20%',
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${Math.random() * 3 + 3}s`,
-              }}
-            />
-          ))}
-        </div>
-        <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-center mb-16 animate-fade-in">
+      <section id="services" className="py-24 bg-card/50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-center mb-16">
             Услуги
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {services.map((service, idx) => (
               <Card 
                 key={idx}
-                className="p-8 hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 border-border bg-card group animate-rotate-in"
-                style={{ 
-                  animationDelay: `${idx * 0.15}s`,
-                }}
+                className="group relative h-56 overflow-hidden border-border bg-card hover:shadow-xl hover:shadow-primary/20 transition-all duration-500 cursor-pointer"
               >
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-4 rounded-xl group-hover:bg-primary/20 transition-colors pulse-glow">
-                    <Icon name={service.icon} size={32} className="text-primary" />
+                <div className="absolute inset-0 p-8 flex flex-col justify-center items-center text-center transition-all duration-500 group-hover:translate-y-[-100%]">
+                  <div className="bg-primary/10 p-4 rounded-xl mb-4">
+                    <Icon name={service.icon} size={48} className="text-primary" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-heading font-bold mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
+                  <h3 className="text-xl font-heading font-bold">
+                    {service.title}
+                  </h3>
+                </div>
+                <div className="absolute inset-0 p-8 translate-y-[100%] group-hover:translate-y-0 transition-all duration-500 flex items-center justify-center bg-card/95">
+                  <p className="text-muted-foreground leading-relaxed text-center">
+                    {service.description}
+                  </p>
                 </div>
               </Card>
             ))}
@@ -257,7 +205,7 @@ function Index() {
           </h2>
           <Card className="max-w-4xl mx-auto p-12 bg-card/95 backdrop-blur-sm border-2 border-primary/20 animate-scale-in">
             <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-48 h-48 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border-2 border-primary/30 hover:border-primary transition-colors float-animation">
+              <div className="w-48 h-48 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border-2 border-primary/30 hover:border-primary transition-colors">
                 <div className="text-center">
                   <Icon name="User" size={64} className="mx-auto mb-2" />
                   <p className="text-sm">Ваше фото</p>
@@ -275,11 +223,12 @@ function Index() {
                   рассказываю о лучших практиках DevOps и делюсь историями из практики. 
                   Подписывайтесь на мой Telegram канал для получения свежих статей и инсайтов!
                 </p>
-                <div className="w-32 h-32 rounded-xl bg-muted/50 flex items-center justify-center border-2 border-dashed border-primary/40 hover:border-primary transition-colors pulse-glow">
-                  <div className="text-center text-muted-foreground text-sm">
-                    <Icon name="QrCode" size={48} className="mx-auto mb-2" />
-                    <p>QR Telegram</p>
-                  </div>
+                <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-primary/40 hover:border-primary transition-colors">
+                  <img 
+                    src="https://cdn.poehali.dev/projects/1084d57b-4e46-46c4-86af-f00dd96417e2/files/43aedc7b-5ded-43e5-8ca8-b443d56edadb.jpg" 
+                    alt="QR Telegram"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
